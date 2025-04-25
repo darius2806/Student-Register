@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Register</title>
+  <style>
+    body {
+      padding: 20px;
+    }
+    h2 {
+      margin-top: 30px;
+      color: #333;
+    }
+    .student-list {
+      margin-bottom: 20px;
+      padding: 30px;
+      background: #c4b0c3;
+      border-radius: 5px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>Student Register</h1>
+  <div id="all-students"></div>
+  <div id="by-class"></div>
+  <div id="by-grade"></div>
+
+  <script>
+    let students = [
+      { name: "Esther", class: "JSS1", score: 90 },
+      { name: "Balami", class: "JSS2", score: 61},
+      { name: "Chingy", class: "JSS1", score: 35 },
+      { name: "Lisa", class: "JSS3", score: 61 },
+      { name: "Marvin", class: "JSS2", score: 48 },
+      { name: "Sonia", class: "JSS3", score: 93 },
+      { name: "Maya", class: "JSS1", score: 70}
+    ];
+
+    let allStudentsDiv = document.getElementById("all-students");
+    let byClassDiv = document.getElementById("by-class");
+    let byGradeDiv = document.getElementById("by-grade");
+
+    function getGrade(score) {
+      if (score >= 70) return 'A';
+      if (score >= 60) return 'B';
+      if (score >= 50) return 'C';
+      if (score >= 40) return 'D';
+      else return 'F';
+    }
+
+    // Task 1: Show all students
+    allStudentsDiv.innerHTML = `<h2>All Students</h2>` + students.map(s => `<div class="student-list">${s.name} (${s.class}) - Score: ${s.score}</div>`).join('');
+
+    // Task 2: Group by Class
+    let classGroups = {};
+    students.forEach(s => {
+      if (!classGroups[s.class]) classGroups[s.class] = [];
+      classGroups[s.class].push(s);
+    });
+
+    byClassDiv.innerHTML = `<h2>Students by Class</h2>`;
+    for (let className in classGroups) {
+      let list = classGroups[className].map(s => `<li>${s.name} - Score: ${s.score}</li>`).join('');
+      byClassDiv.innerHTML += `<div class="student-list"><strong>${className}</strong><ul>${list}</ul></div>`;
+    }
+
+    // Task 3: Group by Grade
+    let gradeGroups = {};
+    students.forEach(s => {
+      let grade = getGrade(s.score);
+      if (!gradeGroups[grade]) gradeGroups[grade] = [];
+      gradeGroups[grade].push(s);
+    });
+
+    byGradeDiv.innerHTML = `<h2>Students by Grade</h2>`;
+    for (let grade in gradeGroups) {
+      let list = gradeGroups[grade].map(s => `<li>${s.name} (${s.class}) - Score: ${s.score}</li>`).join('');
+      byGradeDiv.innerHTML += `<div class="student-list"><strong>Grade ${grade}</strong><ul>${list}</ul></div>`;
+    }
+  </script>
+
+</body>
+<footer>
+    <a href=""</a>
+</footer>
+</html>
